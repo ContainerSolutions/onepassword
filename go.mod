@@ -1,4 +1,4 @@
-module github.com/ameier38/onepassword
+module github.com/ContainerSolutions/onepassword
 
 go 1.12
 
