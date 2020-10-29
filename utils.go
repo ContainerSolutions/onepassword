@@ -2,6 +2,7 @@ package onepassword
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -36,4 +37,15 @@ func buildMockOnePassword() (string, error) {
 		"mock-op"+getExtension())
 
 	return programPath, nil
+}
+
+// randomString generates a string of size N including lower case letters and numbers
+func randomString(n int) string {
+	var letters = []rune("abcdefghijklmnopqrstuvwxyz0123456789")
+
+	s := make([]rune, n)
+	for i := range s {
+		s[i] = letters[rand.Intn(len(letters))]
+	}
+	return string(s)
 }

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"os"
 	"os/exec"
 	"strings"
 	"sync"
@@ -65,6 +66,14 @@ func (op Client) runCmd(args ...string) ([]byte, error) {
 // Calls the `op signin` command and passes in the password via stdin.
 // usage: op signin <signinaddress> <emailaddress> <secretkey> [--output=raw]
 func (op *Client) authenticate() error {
+	// By default, the CLI generates a random key named OP_DEVICE during the signin
+	// to be used in all its subsequent resquests.
+	// The key must be 26 chars long, only lower case letters and numbers.
+	// It can be randomly generated on every login.
+	// See: https://1password.community/discussion/114059/device-uuid
+	opDevice := randomString(26)
+	os.Setenv("OP_DEVICE", opDevice)
+
 	signinAddress := fmt.Sprintf("%s.1password.com", op.Subdomain)
 	op.mutex.Lock()
 	cmd := exec.Command(op.OpPath, "signin", signinAddress, op.Email, op.SecretKey, "--output=raw")
