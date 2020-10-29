@@ -39,8 +39,8 @@ func buildMockOnePassword() (string, error) {
 	return programPath, nil
 }
 
-// randomString generates a string of size N including lower case letters and numbers
-func randomString(n int) string {
+// generateOpDevice generates a string N chars long, only lower case letters and numbers
+func generateOpDevice(n int) string {
 	var letters = []rune("abcdefghijklmnopqrstuvwxyz0123456789")
 
 	s := make([]rune, n)
