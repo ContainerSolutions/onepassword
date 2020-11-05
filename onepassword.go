@@ -70,7 +70,10 @@ func (op *Client) authenticate() error {
 	// to be used in all its subsequent resquests.
 	// It can be randomly generated on every login.
 	// See: https://1password.community/discussion/114059/device-uuid
-	opDevice := generateOpDevice(26)
+	opDevice, err := generateOpDevice(26)
+	if err != nil {
+		return err
+	}
 	os.Setenv("OP_DEVICE", opDevice)
 
 	signinAddress := fmt.Sprintf("%s.1password.com", op.Subdomain)
